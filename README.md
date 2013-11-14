@@ -1,6 +1,6 @@
 # Dlerss - File downloader from RSS
 This project is inspired by RSSDler (https://code.google.com/p/rssdler/), but this project does not have as many features.
-The only thing this application does is that it downloads files linked in an RSS (XML) feeds if the titles are matched against some regular expression.
+The only thing this application does is that it downloads files linked in RSS (XML) feeds if the titles are matched against some regular expression.
 
 ## Example configuration
 ```bash
@@ -20,7 +20,7 @@ coolfeeds.saveFolder = "/my/cool/folder"
 
 hotfeeds.url = "https://..."
 hotfeeds.scanTime = 5
-hotfeeds.regexTrue = "(KittyNews S\\d{2}E\d{2}|DogTimes Season [1-5])"
+hotfeeds.regexTrue = "(KittyNews S\\d{2}E\\d{2}|DogTimes Season [1-5])"
 coolfeeds.regexFalse = "Fluffy"
 hotfeeds.saveFolder = "/my/hot/stuff"
 ```
@@ -53,6 +53,10 @@ scala Dlerss.jar ../folder/bad-ass.conf
 ```bash
 "com.typesafe" % "config" % "1.0.2"
 ```
+
+## Regular Expressions
+This is a good site to learn more: http://www.tutorialspoint.com/scala/scala_regular_expressions.htm
+Note that to match for example digits, you have to use \\d with double back slashes to not mess up the string in the configuration file.
 
 ## License
 Copyright 2013 Anton Fagerberg (http://www.antonfagerberg.com).
