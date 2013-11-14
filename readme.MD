@@ -37,8 +37,10 @@ scala dlerss_2.10-1.0.jar
 
 This will look for a configuration file in the current directory i.e. "application.conf". To specify another configuration:
 ```bash
-scala dlerss_2.10-1.0.jar ../folder/bad-ass.conf
+scala dlerss_2.10-1.0.jar folder/bad-ass.conf
 ```
+
+Note that some paths like ../folder/application.conf is not supported yet. To avoid errors, just place application.conf in the same folder as the jar-file and start it from there until this is fixed.
 
 ### Dependencies
 ```bash
