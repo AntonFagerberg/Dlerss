@@ -9,7 +9,7 @@ import collection.JavaConversions._
 import scala.util.matching.Regex
 
 
-class Dlerss(configurationFile: String) {
+class Dlerss(configurationFile: File) {
   case class Setting(
     name: String,
     xml: Elem,
@@ -19,7 +19,8 @@ class Dlerss(configurationFile: String) {
     folder: File
   )
 
-  val conf = ConfigFactory.load(configurationFile)
+
+  val conf = ConfigFactory.parseFile(configurationFile)
   val settings = conf.getStringList("names").map { name =>
     Setting(
       name,
@@ -60,12 +61,16 @@ class Dlerss(configurationFile: String) {
 
 object Dlerss {
   def main(args: Array[String]) {
-    val configurationFile = args.headOption
+    val configurationFile = args.headOption.map { filePath =>
+      new File(filePath)
+    } getOrElse {
+      new File("application.conf")
+    }
 
-    if (configurationFile.isEmpty) {
-      new Dlerss("application.conf")
+    if (configurationFile.canRead) {
+      new Dlerss(configurationFile)
     } else {
-      new Dlerss(configurationFile.get)
+      stderr.println(s"Unable to read configuration file: $configurationFile")
     }
   }
 }
