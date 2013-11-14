@@ -14,14 +14,14 @@ coolfeeds.scanTime = 10
 # Download all files which has a match in:
 coolfeeds.regexTrue = "(Kittens|Dogs)"
 # But ingore all files which has a match in (set to ^$ to disable):
-hotfeeds.regexFalse = "$^"
+coolfeeds.regexFalse = "$^"
 # Save files to this folder:
 coolfeeds.saveFolder = "/my/cool/folder"
 
 hotfeeds.url = "https://..."
 hotfeeds.scanTime = 5
 hotfeeds.regexTrue = "(KittyNews S\\d{2}E\\d{2}|DogTimes Season [1-5])"
-coolfeeds.regexFalse = "Fluffy"
+hotfeeds.regexFalse = "Fluffy"
 hotfeeds.saveFolder = "/my/hot/stuff"
 ```
 
