@@ -26,7 +26,7 @@ hotfeeds.saveFolder = "/my/hot/stuff"
 ```
 
 ## Build
-To build a "fat" executable, use the SBT assembly provided in this project.
+To build a "fat" self-contained executable, use the SBT assembly provided in this project.
 
 ```bash
 sbt assembly
