@@ -62,8 +62,6 @@ object Dlerss {
   def main(args: Array[String]) {
     val configurationFile = args.headOption
 
-    println(configurationFile)
-
     if (configurationFile.isEmpty) {
       new Dlerss("application.conf")
     } else {
