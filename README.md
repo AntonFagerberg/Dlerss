@@ -1,4 +1,6 @@
 # Dlerss - File downloader from RSS
+Note that this is a work in progress so the build is currently not working properly.
+
 This project is inspired by RSSDler (https://code.google.com/p/rssdler/) but it does not have nearly as many features.
 The only thing supported is downloading files linked in RSS (XML) feeds which matches some regular expression.
 
@@ -32,14 +34,12 @@ sbt package
 
 ## Run
 ```bash
-scala dlerss_2.10-1.0.jar
+scala Dlerss.jar
 ```
-
-Not that you can't run it with java -jar without specifying the Scala dependencies.
 
 This will look for a configuration file in the current directory i.e. "application.conf". To specify another configuration:
 ```bash
-scala dlerss_2.10-1.0.jar folder/bad-ass.conf
+scala Dlerss.jar folder/bad-ass.conf
 ```
 
 Note that some paths like ../folder/application.conf is not supported yet. To avoid errors, just place application.conf in the same folder as the jar-file and start it from there until this is fixed.
