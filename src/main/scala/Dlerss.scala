@@ -32,6 +32,11 @@ class Dlerss(configurationFile: File) {
     )
   }
 
+  settings.foreach { s =>
+    if (!s.folder.isDirectory || !s.folder.canWrite)
+      System.err.println(s"Unable to write to folder: ${s.folder.getAbsolutePath}")
+  }
+
   settings foreach { setting =>
     new Thread() {
       override def run() {
@@ -43,9 +48,9 @@ class Dlerss(configurationFile: File) {
               val saveFile = new File(s"${setting.folder.getAbsolutePath}/$title.torrent")
 
               if (!setting.folder.isDirectory) {
-                stderr.println(s"Folder doesn't exist. (${setting.folder})")
+                System.err.println(s"Folder doesn't exist. (${setting.folder})")
               } else if (!setting.folder.canWrite) {
-                stderr.println(s"Can't write to folder, check permissions. (${setting.folder})")
+                System.err.println(s"Can't write to folder, check permissions. (${setting.folder})")
               } else if (!saveFile.exists()) {
                 (new URL((item \ "link").text) #> saveFile).run()
                 println(s"Downloaded: ${saveFile.getName} from ${setting.name}.")
@@ -70,7 +75,7 @@ object Dlerss {
     if (configurationFile.canRead) {
       new Dlerss(configurationFile)
     } else {
-      stderr.println(s"Unable to read configuration file: $configurationFile")
+      System.err.println(s"Unable to read configuration file: $configurationFile")
     }
   }
 }
