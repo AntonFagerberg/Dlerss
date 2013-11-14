@@ -1,8 +1,6 @@
 # Dlerss - File downloader from RSS
-Note that this is a work in progress so the build is currently not working properly.
-
-This project is inspired by RSSDler (https://code.google.com/p/rssdler/) but it does not have nearly as many features.
-The only thing supported is downloading files linked in RSS (XML) feeds which matches some regular expression.
+This project is inspired by RSSDler (https://code.google.com/p/rssdler/), but this project does not have as many features.
+The only thing this application does is that it downloads files linked in an RSS (XML) feeds if the titles are matched against some regular expression.
 
 ## Example configuration
 ```bash
@@ -28,21 +26,28 @@ hotfeeds.saveFolder = "/my/hot/stuff"
 ```
 
 ## Build
+To build a "fat" executable, use the SBT assembly provided in this project.
+
 ```bash
-sbt package
+sbt assembly
 ```
+
+This will generate a self-contained JAR-file, see command output for the location where it is saved.
 
 ## Run
+If assembly has been used to create the JAR-file, you can execute the file with either Java or Scala:
 ```bash
-scala Dlerss.jar
+scala dlerss.jar
 ```
 
-This will look for a configuration file in the current directory i.e. "application.conf". To specify another configuration:
 ```bash
-scala Dlerss.jar folder/bad-ass.conf
+java -jar dlerss.jar
 ```
 
-Note that some paths like ../folder/application.conf is not supported yet. To avoid errors, just place application.conf in the same folder as the jar-file and start it from there until this is fixed.
+By default, dlerss will look for a configuration file in the current directory called "application.conf". To specify another configuration file, simply specify it as the first argument:
+```bash
+scala Dlerss.jar ../folder/bad-ass.conf
+```
 
 ### Dependencies
 ```bash
