@@ -35,6 +35,8 @@ sbt package
 scala dlerss_2.10-1.0.jar
 ```
 
+Not that you can't run it with java -jar without specifying the Scala dependencies.
+
 This will look for a configuration file in the current directory i.e. "application.conf". To specify another configuration:
 ```bash
 scala dlerss_2.10-1.0.jar folder/bad-ass.conf
