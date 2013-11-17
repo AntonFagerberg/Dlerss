@@ -12,7 +12,7 @@ import scala.util.matching.Regex
 class Dlerss(configurationFile: File) {
   case class Setting(
     name: String,
-    xml: Elem,
+    url: URL,
     scanTime: Int,
     regexTrue: Regex,
     regexFalse: Regex,
@@ -24,7 +24,7 @@ class Dlerss(configurationFile: File) {
   val settings = conf.getStringList("names").map { name =>
     Setting(
       name,
-      XML.load(conf.getString(s"$name.url")),
+      new URL(conf.getString(s"$name.url")),
       conf.getInt(s"$name.scanTime"),
       conf.getString(s"$name.regexTrue").r,
       conf.getString(s"$name.regexFalse").r,
@@ -41,7 +41,7 @@ class Dlerss(configurationFile: File) {
     new Thread() {
       override def run() {
         while (true) {
-          for (item <- setting.xml \\ "item") {
+          for (item <- XML.load(setting.url) \\ "item") {
             val title = (item \ "title").text
 
             if (setting.regexFalse.findFirstIn(title).isEmpty && setting.regexTrue.findFirstIn(title).isDefined) {
