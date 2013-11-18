@@ -1,7 +1,7 @@
 package main.scala
 
 import java.io.File
-import java.net.URL
+import java.net.{URL,UnknownHostException}
 import scala.xml.{Elem, XML}
 import sys.process._
 import com.typesafe.config.ConfigFactory
@@ -41,21 +41,25 @@ class Dlerss(configurationFile: File) {
     new Thread() {
       override def run() {
         while (true) {
-          for (item <- XML.load(setting.url) \\ "item") {
-            val title = (item \ "title").text
+          try {
+            for (item <- XML.load(setting.url) \\ "item") {
+              val title = (item \ "title").text
 
-            if (setting.regexFalse.findFirstIn(title).isEmpty && setting.regexTrue.findFirstIn(title).isDefined) {
-              val saveFile = new File(s"${setting.folder.getAbsolutePath}/$title.torrent")
+              if (setting.regexFalse.findFirstIn(title).isEmpty && setting.regexTrue.findFirstIn(title).isDefined) {
+                val saveFile = new File(s"${setting.folder.getAbsolutePath}/$title.torrent")
 
-              if (!setting.folder.isDirectory) {
-                System.err.println(s"Folder doesn't exist. (${setting.folder})")
-              } else if (!setting.folder.canWrite) {
-                System.err.println(s"Can't write to folder, check permissions. (${setting.folder})")
-              } else if (!saveFile.exists()) {
-                (new URL((item \ "link").text) #> saveFile).run()
-                println(s"Downloaded: ${saveFile.getName} from ${setting.name}.")
+                if (!setting.folder.isDirectory) {
+                  System.err.println(s"Folder doesn't exist. (${setting.folder})")
+                } else if (!setting.folder.canWrite) {
+                  System.err.println(s"Can't write to folder, check permissions. (${setting.folder})")
+                } else if (!saveFile.exists()) {
+                  (new URL((item \ "link").text) #> saveFile).run()
+                  println(s"Downloaded: ${saveFile.getName} from ${setting.name}.")
+                }
               }
             }
+          } catch {
+            case e: UnknownHostException => println(s"Unable to load URL: ${setting.url}")
           }
           Thread.sleep(setting.scanTime * 60000)
         }
