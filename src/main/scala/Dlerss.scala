@@ -1,6 +1,6 @@
 package main.scala
 
-import java.io.File
+import java.io.{File,IOException}
 import java.net.{URL,UnknownHostException}
 import scala.xml.{Elem, XML}
 import sys.process._
@@ -60,6 +60,7 @@ class Dlerss(configurationFile: File) {
             }
           } catch {
             case e: UnknownHostException => println(s"Unable to load URL: ${setting.url}")
+            case e: IOException => System.err.println(e)
           }
           Thread.sleep(setting.scanTime * 60000)
         }
