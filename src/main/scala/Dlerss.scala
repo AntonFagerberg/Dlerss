@@ -32,6 +32,8 @@ class Dlerss(configurationFile: File) {
     )
   }
 
+  val showExceptions = conf.getBoolean("showExceptions")
+
   settings.foreach { s =>
     if (!s.folder.isDirectory || !s.folder.canWrite)
       System.err.println(s"Unable to write to folder: ${s.folder.getAbsolutePath}")
@@ -59,8 +61,8 @@ class Dlerss(configurationFile: File) {
               }
             }
           } catch {
-            case e: UnknownHostException => println(s"Unable to load URL: ${setting.url}")
-            case e: IOException => System.err.println(e)
+            case e: UnknownHostException => if (showExceptions) println(s"Unable to load URL: ${setting.url}")
+            case e: IOException => if (showExceptions) System.err.println(e)
           }
           Thread.sleep(setting.scanTime * 60000)
         }
