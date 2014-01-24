@@ -63,6 +63,7 @@ class Dlerss(configurationFile: File) {
           } catch {
             case e: UnknownHostException => if (showExceptions) println(s"Unable to load URL: ${setting.url}")
             case e: IOException => if (showExceptions) System.err.println(e)
+            case e: org.xml.sax.SAXParseException => if (showExceptions) System.err.println(e)
           }
           Thread.sleep(setting.scanTime * 60000)
         }
