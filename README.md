@@ -7,6 +7,9 @@ The only thing this application does is that it downloads files linked in RSS (X
 # Names of all enabled feeds.
 names = [ "coolfeeds", "hotfeeds" ]
 
+# Display thrown exceptions (such as failing urls).
+showExceptions = true
+
 # URL to feed (XML).
 coolfeeds.url = "https://..."
 # Scan intervals in minutes.
